@@ -1,0 +1,22 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Penguin agent
+.penguin/
+
+# Build artifacts
+*.bak
+build.py.bak
+
+# Error logs
+errors_log/
+
+# Editor
+*.swp
+*.swo
+*~
+
+# Dependencies
+node_modules/
