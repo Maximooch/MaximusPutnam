@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Sprite Sheet Viewer</title>
+<style>
+  body { background: #333; color: #fff; font-family: monospace; padding: 20px; }
+  h1 { margin-bottom: 10px; }
+  h2 { margin-top: 30px; margin-bottom: 10px; color: #8af; }
+  .animation { margin-bottom: 20px; }
+  .frames { display: flex; gap: 4px; flex-wrap: wrap; }
+  .frame { width: 32px; height: 32px; background: #222; border: 1px solid #555; position: relative; }
+  .frame img { width: 100%; height: 100%; image-rendering: pixelated; }
+  .frame .num { position: absolute; bottom: 0; right: 0; font-size: 8px; background: rgba(255,0,0,0.7); padding: 1px; }
+  .stats { background: #444; padding: 10px; border-radius: 4px; margin-bottom: 20px; }
+</style>
+</head>
+<body>
+
+<h1>Penguin Sprites</h1>
+
+<div class="stats">
+  <strong>40 valid sprites</strong> organized into 7 animations
+</div>
+
+<div class="animation">
+  <h2>idle (12 frames)</h2>
+  <div class="frames" id="idle"></div>
+</div>
+
+<div class="animation">
+  <h2>crouch (7 frames)</h2>
+  <div class="frames" id="crouch"></div>
+</div>
+
+<div class="animation">
+  <h2>waddle (4 frames)</h2>
+  <div class="frames" id="waddle"></div>
+</div>
+
+<div class="animation">
+  <h2>run (6 frames)</h2>
+  <div class="frames" id="run"></div>
+</div>
+
+<div class="animation">
+  <h2>angry (3 frames)</h2>
+  <div class="frames" id="angry"></div>
+</div>
+
+<div class="animation">
+  <h2>worry (4 frames)</h2>
+  <div class="frames" id="worry"></div>
+</div>
+
+<div class="animation">
+  <h2>sleep (4 frames)</h2>
+  <div class="frames" id="sleep"></div>
+</div>
+
+<script>
+const animations = {
+  idle: 12,
+  crouch: 7,
+  waddle: 4,
+  run: 6,
+  angry: 3,
+  worry: 4,
+  sleep: 4
+};
+
+for (const [anim, count] of Object.entries(animations)) {
+  const container = document.getElementById(anim);
+  for (let i = 0; i < count; i++) {
+    const frame = document.createElement('div');
+    frame.className = 'frame';
+    frame.innerHTML = `<img src="${anim}/frame_${String(i).padStart(2,'0')}.png" onerror="this.style.background='#800'"><span class="num">${i}</span>`;
+    container.appendChild(frame);
+  }
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Sprite Sheet Viewer</title>
+<style>
+  body { background: #333; color: #fff; font-family: monospace; padding: 20px; }
+  h1 { margin-bottom: 20px; }
+  .sheet { display: grid; grid-template-columns: repeat(12, 32px); gap: 1px; background: #000; }
+  .cell { width: 32px; height: 32px; position: relative; }
+  .cell img { width: 100%; height: 100%; image-rendering: pixelated; }
+  .cell .num { position: absolute; bottom: 0; right: 0; font-size: 8px; background: rgba(255,0,0,0.7); padding: 1px; }
+  .legend { margin-top: 20px; }
+  .legend span { margin-right: 20px; }
+</style>
+</head>
+<body>
+
+<h1>Penguin Sprite Sheet (384x224 = 12×7 grid)</h1>
+
+<div class="sheet" id="sheet"></div>
+
+<div class="legend">
+  <p>Rows: 7 | Columns: 12 | Sprite size: 32×32</p>
+  <p>Red numbers = sprite index (0-83)</p>
+</div>
+
+<script>
+const sheet = document.getElementById('sheet');
+for (let i = 0; i < 84; i++) {
+  const cell = document.createElement('div');
+  cell.className = 'cell';
+  cell.innerHTML = `<img src="penguin_${String(i).padStart(2,'0')}.png" onerror="this.style.background='#800'"><span class="num">${i}</span>`;
+  sheet.appendChild(cell);
+}
+</script>
+
+</body>
+</html>

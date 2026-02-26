@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖥️</text></svg>" />
 <title>Maximus Putnam</title>
 <meta name="description" content="Maximus Putnam — founder of LinkAI. Building Link & Penguin: an AI workspace and a software-engineering agent." />
 <style>
@@ -108,15 +109,34 @@
     .icon{ width:84px; }
     .window{ min-width:260px; }
   }
+
+  /* ===== Penguin Cursor Follower ===== */
+  #penguin-cursor {
+    position: fixed;
+    width: 48px;
+    height: 48px;
+    pointer-events: none;
+    z-index: 9998;
+    image-rendering: pixelated;
+    transition: transform 0.1s ease-out;
+    display: block;
+    top: 50%;
+    left: 50%;
+  }
+  #penguin-cursor.flip {
+    transform: scaleX(-1);
+  }
 </style>
 </head>
 <body>
+<img id="penguin-cursor" src="sprites/idle/frame_00.png" alt="">
+
 
   <!-- ===== Menubar ===== -->
   <div class="menubar" role="navigation" aria-label="Menu bar">
     <div class="menu-left">
-      <div class="apple"></div>
-      <div class="menu-item" data-open="#about">About This Mac…</div>
+      <div class="apple"><img src="sprites/menubar_icon.png" alt="Penguin" style="height:32px;vertical-align:middle;"></div>
+      <div class="menu-item" data-open="#about">About</div>
       <div class="menu-item" data-open="#about">File</div>
       <div class="menu-item" data-open="#projects">View</div>
       <div class="menu-item" data-open="#contact">Special</div>
@@ -153,8 +173,7 @@
   </div>
 
   <!-- ===== Windows ===== -->
-
-  <section class="window" id="about" style="top:110px;left:80px;">
+  <section class="window" id="about" style="top:110px;left:80px;display:none;">
     <div class="titlebar">
       <div class="controls">
         <div class="btn close" data-close></div>
@@ -175,7 +194,7 @@
     </div>
   </section>
 
-  <section class="window" id="now" style="top:160px;left:440px;">
+  <section class="window" id="now" style="top:160px;left:440px;display:none;">
     <div class="titlebar">
       <div class="controls">
         <div class="btn close" data-close></div>
@@ -202,7 +221,7 @@
     </div>
   </section>
 
-  <section class="window" id="projects" style="top:260px;left:120px;">
+  <section class="window" id="projects" style="top:260px;left:120px;display:none;">
     <div class="titlebar">
       <div class="controls">
         <div class="btn close" data-close></div>
@@ -222,7 +241,7 @@
     </div>
   </section>
 
-  <section class="window" id="writing" style="top:320px;left:520px;">
+  <section class="window" id="writing" style="top:320px;left:520px;display:none;">
     <div class="titlebar">
       <div class="controls">
         <div class="btn close" data-close></div>
@@ -232,18 +251,18 @@
       <div class="title">Writing</div>
     </div>
     <div class="content">
-      <h2>Notes & Essays (coming soon)</h2>
+      <h2>Notes & Essays</h2>
+      <p><a href="/essays/">Browse all essays →</a></p>
+      <p>Topics I write about:</p>
       <ul>
-        <li>Agentic systems: memory, control flows, and “reasoning engines.”</li>
+        <li>Agentic systems: memory, control flows, and "reasoning engines."</li>
         <li>Cost-effective inference at scale: caching, batching, and infra trade-offs.</li>
         <li>Semiconductor & energy realism for startups.</li>
         <li>Theology side-quests: prayer, tradition, and modern life.</li>
       </ul>
-      <p>Want updates? Ping me and I’ll add a simple email list.</p>
     </div>
-  </section>
 
-  <section class="window" id="contact" style="top:420px;left:220px;">
+  <section class="window" id="contact" style="top:420px;left:220px;display:none;">
     <div class="titlebar">
       <div class="controls">
         <div class="btn close" data-close></div>
@@ -255,7 +274,6 @@
     <div class="content">
       <h2>Get in touch</h2>
       <p>Email: <a href="mailto:hi@maximusputnam.com">hi@maximusputnam.com</a></p>
-      <p>Calendly/DMs: links coming soon.</p>
       <p>Based in Dallas, TX (often online).</p>
       <p class="footnote">Hiring: early engineers (full-stack, infra, agents). If you’re unusually good and bias to action, reach out.</p>
     </div>
@@ -350,6 +368,116 @@ document.querySelectorAll('.window').forEach(w=>{
 
 /* Open About by default on load */
 document.querySelector('#about').style.display='block';
+</script>
+
+<!-- ===== Penguin Cursor Follower ===== -->
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const penguin = document.getElementById('penguin-cursor');
+  if (!penguin) return;
+
+  const animations = {
+    idle: 12,
+    crouch: 7,
+    waddle: 4,
+    run: 6,
+    angry: 3,
+    worry: 4,
+    sleep: 4
+  };
+
+  let currentAnim = 'idle';
+  let currentFrame = 0;
+  let mouseX = window.innerWidth / 2;
+  let mouseY = window.innerHeight / 2;
+  let penguinX = mouseX;
+  let penguinY = mouseY;
+  let lastMouseX = mouseX;
+  let lastMouseY = mouseY;
+  let facingRight = true;
+  let idleTime = 0;
+  let frameCount = 0;
+
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  function animate() {
+    const dx = mouseX - penguinX;
+    const dy = mouseY - penguinY;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+
+    let targetAnim = 'idle';
+
+    if (dist > 200) {
+      targetAnim = 'run';
+      idleTime = 0;
+    } else if (dist > 60) {
+      targetAnim = 'waddle';
+      idleTime = 0;
+    } else if (dist < 40) {
+      idleTime += 16;
+      if (idleTime > 8000) {
+        targetAnim = 'sleep';
+      } else if (idleTime > 4000) {
+        targetAnim = 'crouch';
+      } else {
+        targetAnim = 'idle';
+      }
+    } else {
+      targetAnim = 'idle';
+      idleTime = Math.max(0, idleTime - 8);
+    }
+
+    if (targetAnim !== currentAnim) {
+      currentAnim = targetAnim;
+      currentFrame = 0;
+    }
+
+    frameCount++;
+    const frameDelay = currentAnim === 'run' ? 3 : currentAnim === 'idle' ? 10 : 6;
+    if (frameCount >= frameDelay) {
+      frameCount = 0;
+      if (currentAnim === 'sleep') {
+        currentFrame = Math.min(currentFrame + 1, animations.sleep - 1);
+      } else {
+        currentFrame = (currentFrame + 1) % animations[currentAnim];
+      }
+    }
+
+    penguin.src = `sprites/${currentAnim}/frame_${String(currentFrame).padStart(2, '0')}.png`;
+
+    let easing = 0.02;
+    if (dist > 300) easing = 0.05;
+    else if (dist > 150) easing = 0.035;
+    else if (dist > 80) easing = 0.025;
+
+    penguinX += dx * easing;
+    penguinY += dy * easing;
+
+    if (dx > 3 && !facingRight) {
+      facingRight = true;
+      penguin.classList.remove('flip');
+    } else if (dx < -3 && facingRight) {
+      facingRight = false;
+      penguin.classList.add('flip');
+    }
+
+    penguin.style.left = (penguinX - 24) + 'px';
+    penguin.style.top = (penguinY - 24 + 40) + 'px';
+
+    lastMouseX = mouseX;
+    lastMouseY = mouseY;
+
+    requestAnimationFrame(animate);
+  }
+
+  penguin.style.display = 'block';
+  animate();
+});
 </script>
 </body>
 </html>
