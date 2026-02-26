@@ -1,0 +1,9 @@
+title: Selected Work
+window_title: Projects
+body:
+  - paragraph: "**Link** — the AI workspace for teams: chat, projects, automations, agent orchestration, and context visualization."
+  - paragraph: "**Penguin** — an AI software-engineering agent with its own execution environment, long-term memory, and multi-agent coordination."
+  - paragraph: "**Krill (Terminal)** — a cozy, modern terminal/task-graph interface (side project; integrates with Link)."
+  - paragraph: "**Penguin Saloon** — a tabletop-style strategy card game; future digital version planned."
+  - paragraph: "**Big Ideas** — Link Wallet & data marketplace; US manufacturing & semiconductor capacity; smart-city logistics; geothermal & nuclear-forward energy."
+footnote: "If you're building in any of the above and want to jam, reach out."

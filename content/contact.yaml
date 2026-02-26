@@ -1,0 +1,6 @@
+title: Get in touch
+window_title: Contact
+body:
+  - paragraph: "Email: <a href=\"mailto:hi@maximusputnam.com\">hi@maximusputnam.com</a>"
+  - paragraph: Based in Dallas, TX (often online).
+footnote: "Hiring: early engineers (full-stack, infra, agents). If you're unusually good and bias to action, reach out."

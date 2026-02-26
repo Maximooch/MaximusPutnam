@@ -1,0 +1,10 @@
+title: Notes & Essays
+window_title: Writing
+intro: |
+  <p><a href="/essays/">Browse all essays →</a></p>
+  <p>Topics I write about:</p>
+list:
+  - "Agentic systems: memory, control flows, and reasoning engines."
+  - "Cost-effective inference at scale: caching, batching, and infra trade-offs."
+  - "Semiconductor & energy realism for startups."
+  - "Theology side-quests: prayer, tradition, and modern life."

@@ -1,0 +1,13 @@
+title: What I'm doing now
+window_title: Now
+list:
+  - "Shipping core **Link** features (OAuth, multi-panel workspace, real-time chat & project graph)."
+  - "Hardening **Penguin** as a coding agent (execution env, memory, multi-agent handoffs, checkpoints/branching)."
+  - "Spooling GPU capacity across clouds/neo-clouds; exploring on-prem for cost/perf."
+  - "Talking to early users, angels, and grant programs; recruiting founding engineers soon."
+pills:
+  - AI Agents
+  - Reasoning
+  - Infra
+  - Cost-efficiency
+  - Execution

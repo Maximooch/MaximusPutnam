@@ -1,0 +1,9 @@
+title: Hey, I'm Maximus Putnam
+window_title: About Me
+body:
+  - paragraph: Founder of **Penguin**, building **Link** (an AI workspace for projects, chat, and automation) and **penguin** (a software-engineering agent).
+  - paragraph: I'm focused on agentic reasoning, orchestration, memory, tool use, and cost-efficient inference (vLLM/SGLang). I think in systems, enjoy clean execution, and bias toward shipping.
+list:
+  - "Previously: self-taught SWE; built web stacks → Python for agent cognitive architectures."
+  - "Interests: AI agents & cognition, neuroscience, semiconductors & US manufacturing, robotics/automation, energy (esp. nuclear & geothermal), civic infrastructure, theology & church history, and the occasional game design experiment."
+footnote: "Note: this site is intentionally minimum-viable retro: no frameworks, just HTML/CSS/JS."
